@@ -48,6 +48,11 @@ def vagas_tecnico(message):
 def get_concursos(message):
     concursos = pci_ti.scrapy_vagas(pci_ti.VAGAS_LINK_DIC[message.text])
     msg_resposta = pci_ti.formatar_msg(concursos)
-    bot.send_message(message.chat.id,msg_resposta)
+    try:
+       bot.send_message(message.chat.id,msg_resposta)
+    except telebot.apihelper.ApiTelegramException as error:
+       print(error)
+       bot.send_message(message.chat.id,"Infelizmente, o Telegram possui um tamanho máximo de mensagem, a quantidade de vagas desse cargo é muito grande, logo não poderão ser exibidas aqui, verifique o site do PCI Concursos para ver os concursos disponíveis para a vaga.")
+    
 
 bot.infinity_polling(50)
