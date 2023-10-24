@@ -1,6 +1,7 @@
 import telebot
 import os
 import pci_ti
+import numpy as np
 
 API_KEY = os.environ["API_TELEGRAM_BOT"]
 bot = telebot.TeleBot(API_KEY)
@@ -51,8 +52,11 @@ def get_concursos(message):
     try:
        bot.send_message(message.chat.id,msg_resposta)
     except telebot.apihelper.ApiTelegramException as error:
+       metades = np.array_split(concursos,2)
+       msg_resposta = pci_ti.formatar_msg(metades[0])
        print(error)
-       bot.send_message(message.chat.id,"Infelizmente, o Telegram possui um tamanho máximo de mensagem, a quantidade de vagas desse cargo é muito grande, logo não poderão ser exibidas aqui, verifique o site do PCI Concursos para ver os concursos disponíveis para a vaga.")
+       bot.send_message(message.chat.id,msg_resposta)
+       bot.send_message(message.chat.id,"Infelizmente, o Telegram possui um tamanho máximo de mensagem, a quantidade de vagas desse cargo é muito grande, logo não poderão ser exibidas todas aqui, verifique o site do PCI Concursos para ver todos os concursos disponíveis para a vaga.")
     
 
 bot.infinity_polling(50)
