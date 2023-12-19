@@ -33,9 +33,9 @@ def scrapy_vagas(uri):
                 dic = {"concurso": vaga.li.a.text, "link": vaga.li.a["href"]}
                 dics_concursos.append(dic)
     return dics_concursos if len(dics_concursos) > 0 else """Não há vagas \
-                                                          para este cargo \
-                                                          disponíveis \
-                                                          no momento"""
+para este cargo \
+disponíveis \
+no momento"""
 
 
 def validar_dados(link, titulo):
